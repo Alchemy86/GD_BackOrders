@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AuctionSniperModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ASEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="GoDaddyAccount" EntityType="AuctionSniperModel.GoDaddyAccount" />
+    <EntitySet Name="Users" EntityType="AuctionSniperModel.Users" />
+    <AssociationSet Name="FK_GoDaddyAccount_Users" Association="AuctionSniperModel.FK_GoDaddyAccount_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="GoDaddyAccount" EntitySet="GoDaddyAccount" />
+    </AssociationSet>
+    <EntitySet Name="Auctions" EntityType="AuctionSniperModel.Auctions" />
+    <EntitySet Name="AuctionSearch" EntityType="AuctionSniperModel.AuctionSearch" />
+    <AssociationSet Name="FK_Auctions_GoDaddyAccount" Association="AuctionSniperModel.FK_Auctions_GoDaddyAccount">
+      <End Role="GoDaddyAccount" EntitySet="GoDaddyAccount" />
+      <End Role="Auctions" EntitySet="Auctions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Auctions_GoDaddyAccount2" Association="AuctionSniperModel.FK_Auctions_GoDaddyAccount2">
+      <End Role="GoDaddyAccount" EntitySet="GoDaddyAccount" />
+      <End Role="AuctionSearch" EntitySet="AuctionSearch" />
+    </AssociationSet>
+    <EntitySet Name="AuctionHistory" EntityType="AuctionSniperModel.AuctionHistory" />
+    <EntitySet Name="AuctionHistoryView" EntityType="AuctionSniperModel.AuctionHistoryView" />
+    <EntitySet Name="Alerts" EntityType="AuctionSniperModel.Alerts" />
+    <EntitySet Name="EventLog" EntityType="AuctionSniperModel.EventLog" />
+    <FunctionImport Name="USP_SearchQueryBuilder2">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="SearchTable" EntityType="AuctionSniperModel.SearchTable" />
+    <EntitySet Name="SearchLayout" EntityType="AuctionSniperModel.SearchLayout" />
+    <EntitySet Name="AdvSearch" EntityType="AuctionSniperModel.AdvSearch" />
+    <EntitySet Name="SearchConfig" EntityType="AuctionSniperModel.SearchConfig" />
+    <EntitySet Name="SystemConfig" EntityType="AuctionSniperModel.SystemConfig" />
+    <EntitySet Name="Chart_AuctionHistory" EntityType="AuctionSniperModel.Chart_AuctionHistory" />
+    <EntitySet Name="Chart_AuctionsEnding" EntityType="AuctionSniperModel.Chart_AuctionsEnding" />
+    <EntitySet Name="Chart_PopularDomainsThisMonth" EntityType="AuctionSniperModel.Chart_PopularDomainsThisMonth" />
+  </EntityContainer>
+  <EntityType Name="GoDaddyAccount">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GoDaddyUsername" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+    <Property Name="GoDaddyPassword" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+    <Property Name="UserID" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="AuctionSniperModel.FK_GoDaddyAccount_Users" FromRole="GoDaddyAccount" ToRole="Users" />
+    <NavigationProperty Name="Auctions" Relationship="AuctionSniperModel.FK_Auctions_GoDaddyAccount" FromRole="GoDaddyAccount" ToRole="Auctions" />
+    <NavigationProperty Name="AuctionSearch" Relationship="AuctionSniperModel.FK_Auctions_GoDaddyAccount2" FromRole="GoDaddyAccount" ToRole="AuctionSearch" />
+    <Property Type="Boolean" Name="Verified" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="GoDaddyAccount" Relationship="AuctionSniperModel.FK_GoDaddyAccount_Users" FromRole="Users" ToRole="GoDaddyAccount" />
+    <Property Type="Boolean" Name="ReceiveEmails" Nullable="false" />
+    <Property Type="Int32" Name="AccessLevel" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_GoDaddyAccount_Users">
+    <End Role="Users" Type="AuctionSniperModel.Users" Multiplicity="1" />
+    <End Role="GoDaddyAccount" Type="AuctionSniperModel.GoDaddyAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="GoDaddyAccount">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Auctions">
+    <Key>
+      <PropertyRef Name="AuctionID" />
+    </Key>
+    <Property Type="Guid" Name="AuctionID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="DomainName" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AuctionRef" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="BidCount" Nullable="false" />
+    <Property Type="Int32" Name="Traffic" Nullable="false" />
+    <Property Type="Int32" Name="Valuation" Nullable="false" />
+    <Property Type="Int32" Name="Price" Nullable="false" />
+    <Property Type="Int32" Name="MinBid" Nullable="false" />
+    <Property Type="Int32" Name="MinOffer" Nullable="false" />
+    <Property Type="Int32" Name="BuyItNow" Nullable="false" />
+    <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="3" />
+    <Property Type="DateTime" Name="EstimateEndDate" Precision="3" />
+    <Property Type="Guid" Name="AccountID" Nullable="false" />
+    <Property Type="String" Name="Status" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="MyBid" />
+    <Property Type="Boolean" Name="Processed" Nullable="false" />
+    <NavigationProperty Name="GoDaddyAccount" Relationship="AuctionSniperModel.FK_Auctions_GoDaddyAccount" FromRole="Auctions" ToRole="GoDaddyAccount" />
+  </EntityType>
+  <EntityType Name="AuctionSearch">
+    <Key>
+      <PropertyRef Name="AuctionID" />
+    </Key>
+    <Property Type="Guid" Name="AuctionID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="DomainName" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AuctionRef" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="BidCount" Nullable="false" />
+    <Property Type="Int32" Name="Traffic" Nullable="false" />
+    <Property Type="Int32" Name="Valuation" Nullable="false" />
+    <Property Type="Int32" Name="Price" Nullable="false" />
+    <Property Type="Int32" Name="MinBid" Nullable="false" />
+    <Property Type="Int32" Name="MinOffer" Nullable="false" />
+    <Property Type="Int32" Name="BuyItNow" Nullable="false" />
+    <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="3" />
+    <Property Type="DateTime" Name="EstimateEndDate" Precision="3" />
+    <Property Type="Guid" Name="AccountID" Nullable="false" />
+    <Property Type="String" Name="Status" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="MyBid" />
+    <Property Type="Boolean" Name="Processed" Nullable="false" />
+    <NavigationProperty Name="GoDaddyAccount" Relationship="AuctionSniperModel.FK_Auctions_GoDaddyAccount2" FromRole="AuctionSearch" ToRole="GoDaddyAccount" />
+  </EntityType>
+  <Association Name="FK_Auctions_GoDaddyAccount">
+    <End Type="AuctionSniperModel.GoDaddyAccount" Role="GoDaddyAccount" Multiplicity="1" />
+    <End Type="AuctionSniperModel.Auctions" Role="Auctions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GoDaddyAccount">
+        <PropertyRef Name="AccountID" />
+      </Principal>
+      <Dependent Role="Auctions">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Auctions_GoDaddyAccount2">
+    <End Type="AuctionSniperModel.GoDaddyAccount" Role="GoDaddyAccount" Multiplicity="1" />
+    <End Type="AuctionSniperModel.AuctionSearch" Role="AuctionSearch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GoDaddyAccount">
+        <PropertyRef Name="AccountID" />
+      </Principal>
+      <Dependent Role="AuctionSearch">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AuctionHistory">
+    <Key>
+      <PropertyRef Name="HistoryID" />
+    </Key>
+    <Property Type="Guid" Name="HistoryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Text" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="3" />
+    <Property Type="Guid" Name="AuctionLink" Nullable="false" annotation:StoreGeneratedPattern="None" />
+  </EntityType>
+  <EntityType Name="AuctionHistoryView">
+    <Key>
+      <PropertyRef Name="HistoryID" />
+      <PropertyRef Name="Text" />
+      <PropertyRef Name="CreatedDate" />
+      <PropertyRef Name="AuctionLink" />
+    </Key>
+    <Property Type="Guid" Name="HistoryID" Nullable="false" />
+    <Property Type="String" Name="Text" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="3" />
+    <Property Type="Guid" Name="AuctionLink" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Alerts">
+    <Key>
+      <PropertyRef Name="AlertID" />
+    </Key>
+    <Property Type="Guid" Name="AlertID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="800" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="TriggerTime" Nullable="false" Precision="3" />
+    <Property Type="Boolean" Name="Processed" Nullable="false" />
+    <Property Type="Guid" Name="AuctionID" Nullable="false" />
+    <Property Type="Boolean" Name="Custom" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EventLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Guid" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="3" />
+    <Property Type="String" Name="Event" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Message" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="SearchTable">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SearchValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UserID" Type="Guid" Nullable="false" />
+    <Property Name="DataType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemOrder" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SearchLayout">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SearchValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Order" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdvSearch">
+    <Key>
+      <PropertyRef Name="AdvSearchID" />
+    </Key>
+    <Property Name="AdvSearchID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DomainName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="DomainLink" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="PageRank" Type="Int32" />
+    <Property Name="MOZDA" Type="Int32" />
+    <Property Name="MOZPA" Type="Int32" />
+    <Property Name="MozRank" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MozTrust" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CF" Type="Int32" />
+    <Property Name="TF" Type="Int32" />
+    <Property Name="AlexARank" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="MozDom" Type="Int32" />
+    <Property Name="MajDom" Type="Int32" />
+    <Property Name="SimilarWeb" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="SemTarf" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DomainPrice" Type="Int32" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="EsitmateEnd" Type="DateTime" Precision="3" />
+    <Property Name="UserID" Type="Guid" Nullable="false" />
+    <Property Name="Ref" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsAuction" Type="Boolean" Nullable="false" />
+    <Property Name="IsGOdaddy" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SearchConfig">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Guid" Nullable="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RequirePR" Type="Boolean" Nullable="false" />
+    <Property Name="PRMin" Type="Int32" Nullable="false" />
+    <Property Name="PRMax" Type="Int32" Nullable="false" />
+    <Property Name="MajesticBacklinksMin" Type="Int32" Nullable="false" />
+    <Property Name="MajesticBacklinksMAX" Type="Int32" Nullable="false" />
+    <Property Name="MajesticTrustFlowMin" Type="Int32" Nullable="false" />
+    <Property Name="MajesticTrustFlowMax" Type="Int32" Nullable="false" />
+    <Property Name="MajesticCitationFlowMax" Type="Int32" Nullable="false" />
+    <Property Name="MajesticCitationFlowMin" Type="Int32" Nullable="false" />
+    <Property Name="MOZPA" Type="Boolean" Nullable="false" />
+    <Property Name="MOZPAMin" Type="Int32" Nullable="false" />
+    <Property Name="MOZPAMax" Type="Int32" Nullable="false" />
+    <Property Name="MOZDA" Type="Boolean" Nullable="false" />
+    <Property Name="MOZDAMin" Type="Int32" Nullable="false" />
+    <Property Name="MOZDAMax" Type="Int32" Nullable="false" />
+    <Property Name="MajesticIPS" Type="Boolean" Nullable="false" />
+    <Property Name="MajesticIPSMin" Type="Int32" Nullable="false" />
+    <Property Name="MajesticIPSMax" Type="Int32" Nullable="false" />
+    <Property Name="DomainAgeMin" Type="Int32" Nullable="false" />
+    <Property Name="DomainAgeMax" Type="Int32" Nullable="false" />
+    <Property Name="DomainPrice" Type="Boolean" Nullable="false" />
+    <Property Name="DomainPriceMin" Type="Int32" Nullable="false" />
+    <Property Name="DomainPriceMax" Type="Int32" Nullable="false" />
+    <Property Name="FacebookLikesMin" Type="Int32" Nullable="false" />
+    <Property Name="FacebookLikesMax" Type="Int32" Nullable="false" />
+    <Property Name="FacebookSharesMin" Type="Int32" Nullable="false" />
+    <Property Name="FacebookSharesMax" Type="Int32" Nullable="false" />
+    <Property Name="TwitterShares" Type="Boolean" Nullable="false" />
+    <Property Name="TwitterSharesMin" Type="Int32" Nullable="false" />
+    <Property Name="TwitterSharesMax" Type="Int32" Nullable="false" />
+    <Property Name="RedditShares" Type="Boolean" Nullable="false" />
+    <Property Name="RedditSharesMin" Type="Int32" Nullable="false" />
+    <Property Name="RedditSharesMax" Type="Int32" Nullable="false" />
+    <Property Name="PintrestShares" Type="Boolean" Nullable="false" />
+    <Property Name="PintrestSharesMin" Type="Int32" Nullable="false" />
+    <Property Name="PintrestSharesMax" Type="Int32" Nullable="false" />
+    <Property Name="GPlusShares" Type="Boolean" Nullable="false" />
+    <Property Name="GPlusSharesMin" Type="Int32" Nullable="false" />
+    <Property Name="GPlusSharesMax" Type="Int32" Nullable="false" />
+    <Property Name="Auction" Type="Boolean" Nullable="false" />
+    <Property Name="BuyNow" Type="Boolean" Nullable="false" />
+    <Property Name="BarginBin" Type="Boolean" Nullable="false" />
+    <Property Name="CloseOut" Type="Boolean" Nullable="false" />
+    <Property Name="PendingDelete" Type="Boolean" Nullable="false" />
+    <Property Name="Expired" Type="Boolean" Nullable="false" />
+    <Property Name="GoDaddy" Type="Boolean" Nullable="false" />
+    <Property Name="NameJet" Type="Boolean" Nullable="false" />
+    <Property Name="Dynadot" Type="Boolean" Nullable="false" />
+    <Property Name="SnapName" Type="Boolean" Nullable="false" />
+    <Property Name="Sedo" Type="Boolean" Nullable="false" />
+    <Property Name="FakePR" Type="Boolean" Nullable="false" />
+    <Property Name="FakeAlexa" Type="Boolean" Nullable="false" />
+    <Property Name="RequireSemrushKey" Type="Boolean" Nullable="false" />
+    <Property Name="MajMillion" Type="Boolean" Nullable="false" />
+    <Property Name="QuantMillion" Type="Boolean" Nullable="false" />
+    <Property Name="AlexARankRequired" Type="Boolean" Nullable="false" />
+    <Property Name="SemrushRankReq" Type="Boolean" Nullable="false" />
+    <Property Name="SimilarWebRankReq" Type="Boolean" Nullable="false" />
+    <Property Name="RequireAv" Type="Boolean" Nullable="false" />
+    <Property Name="HideAdult" Type="Boolean" Nullable="false" />
+    <Property Name="HideSpammy" Type="Boolean" Nullable="false" />
+    <Property Name="HideBrand" Type="Boolean" Nullable="false" />
+    <Property Name="EndInLower" Type="Int32" Nullable="false" />
+    <Property Name="EndInUpper" Type="Int32" Nullable="false" />
+    <Property Name="ParentCat" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ChildCat" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ParentTopCat" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ChildTopCat" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GoogleIndex" Type="Boolean" Nullable="false" />
+    <Property Name="dmoz" Type="Boolean" Nullable="false" />
+    <Property Name="AllowDash" Type="Boolean" Nullable="false" />
+    <Property Name="AllowDigits" Type="Boolean" Nullable="false" />
+    <Property Name="OnlyDigits" Type="Boolean" Nullable="false" />
+    <Property Name="SalesTypeOffer" Type="Boolean" Nullable="false" />
+    <Property Name="SearchType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" DefaultValue="'Keyword'" />
+    <Property Name="Keyword" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="KeywordSearchType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Pattern" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PatternType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Droplists" Type="Boolean" Nullable="false" />
+    <Property Name="RequireSemrushTraffic" Type="Boolean" Nullable="false" />
+    <Property Name="end_asia" Type="Boolean" Nullable="false" />
+    <Property Name="end_at" Type="Boolean" Nullable="false" />
+    <Property Name="end_au" Type="Boolean" Nullable="false" />
+    <Property Name="end_be" Type="Boolean" Nullable="false" />
+    <Property Name="end_biz" Type="Boolean" Nullable="false" />
+    <Property Name="end_ca" Type="Boolean" Nullable="false" />
+    <Property Name="end_cc" Type="Boolean" Nullable="false" />
+    <Property Name="end_ch" Type="Boolean" Nullable="false" />
+    <Property Name="end_co" Type="Boolean" Nullable="false" />
+    <Property Name="end_com" Type="Boolean" Nullable="false" />
+    <Property Name="end_de" Type="Boolean" Nullable="false" />
+    <Property Name="end_eu" Type="Boolean" Nullable="false" />
+    <Property Name="end_fr" Type="Boolean" Nullable="false" />
+    <Property Name="end_ie" Type="Boolean" Nullable="false" />
+    <Property Name="end_in" Type="Boolean" Nullable="false" />
+    <Property Name="end_info" Type="Boolean" Nullable="false" />
+    <Property Name="end_it" Type="Boolean" Nullable="false" />
+    <Property Name="end_me" Type="Boolean" Nullable="false" />
+    <Property Name="end_mobi" Type="Boolean" Nullable="false" />
+    <Property Name="end_mx" Type="Boolean" Nullable="false" />
+    <Property Name="end_net" Type="Boolean" Nullable="false" />
+    <Property Name="end_nl" Type="Boolean" Nullable="false" />
+    <Property Name="end_nu" Type="Boolean" Nullable="false" />
+    <Property Name="end_org" Type="Boolean" Nullable="false" />
+    <Property Name="end_pl" Type="Boolean" Nullable="false" />
+    <Property Name="end_ru" Type="Boolean" Nullable="false" />
+    <Property Name="end_se" Type="Boolean" Nullable="false" />
+    <Property Name="end_su" Type="Boolean" Nullable="false" />
+    <Property Name="end_tv" Type="Boolean" Nullable="false" />
+    <Property Name="end_uk" Type="Boolean" Nullable="false" />
+    <Property Name="end_us" Type="Boolean" Nullable="false" />
+    <Property Name="end_misc" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SystemConfig">
+    <Key>
+      <PropertyRef Name="PropertyID" />
+    </Key>
+    <Property Name="PropertyID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Value" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Chart_AuctionHistory">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="TotalAuctions" Type="Int32" />
+    <Property Name="AuctionsThisMonth" Type="Int32" />
+    <Property Name="AuctionsWonTotal" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Chart_AuctionsEnding">
+    <Key>
+      <PropertyRef Name="AuctionRef" />
+      <PropertyRef Name="DomainName" />
+      <PropertyRef Name="EndDate" />
+      <PropertyRef Name="Username" />
+      <PropertyRef Name="MinBid" />
+    </Key>
+    <Property Name="AuctionRef" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="DomainName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="MyBid" Type="Int32" />
+    <Property Name="MinBid" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Chart_PopularDomainsThisMonth">
+    <Key>
+      <PropertyRef Name="AuctionRef" />
+      <PropertyRef Name="DomainName" />
+    </Key>
+    <Property Name="AuctionRef" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="DomainName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Bids" Type="Int32" />
+  </EntityType>
+</Schema>

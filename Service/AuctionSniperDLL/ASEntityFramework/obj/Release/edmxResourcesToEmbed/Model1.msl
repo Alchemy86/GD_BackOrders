@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AuctionSniperModelStoreContainer" CdmEntityContainer="ASEntities">
+    <EntitySetMapping Name="GoDaddyAccount">
+      <EntityTypeMapping TypeName="AuctionSniperModel.GoDaddyAccount">
+        <MappingFragment StoreEntitySet="GoDaddyAccount">
+          <ScalarProperty Name="Verified" ColumnName="Verified" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="GoDaddyUsername" ColumnName="GoDaddyUsername" />
+          <ScalarProperty Name="GoDaddyPassword" ColumnName="GoDaddyPassword" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="AuctionSniperModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
+          <ScalarProperty Name="ReceiveEmails" ColumnName="ReceiveEmails" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Auctions">
+      <EntityTypeMapping TypeName="AuctionSniperModel.Auctions">
+        <MappingFragment StoreEntitySet="Auctions">
+          <ScalarProperty Name="Processed" ColumnName="Processed" />
+          <ScalarProperty Name="MyBid" ColumnName="MyBid" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="EstimateEndDate" ColumnName="EstimateEndDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="BuyItNow" ColumnName="BuyItNow" />
+          <ScalarProperty Name="MinOffer" ColumnName="MinOffer" />
+          <ScalarProperty Name="MinBid" ColumnName="MinBid" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Valuation" ColumnName="Valuation" />
+          <ScalarProperty Name="Traffic" ColumnName="Traffic" />
+          <ScalarProperty Name="BidCount" ColumnName="BidCount" />
+          <ScalarProperty Name="AuctionRef" ColumnName="AuctionRef" />
+          <ScalarProperty Name="DomainName" ColumnName="DomainName" />
+          <ScalarProperty Name="AuctionID" ColumnName="AuctionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AuctionSearch">
+      <EntityTypeMapping TypeName="AuctionSniperModel.AuctionSearch">
+        <MappingFragment StoreEntitySet="AuctionSearch">
+          <ScalarProperty Name="Processed" ColumnName="Processed" />
+          <ScalarProperty Name="MyBid" ColumnName="MyBid" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="EstimateEndDate" ColumnName="EstimateEndDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="BuyItNow" ColumnName="BuyItNow" />
+          <ScalarProperty Name="MinOffer" ColumnName="MinOffer" />
+          <ScalarProperty Name="MinBid" ColumnName="MinBid" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Valuation" ColumnName="Valuation" />
+          <ScalarProperty Name="Traffic" ColumnName="Traffic" />
+          <ScalarProperty Name="BidCount" ColumnName="BidCount" />
+          <ScalarProperty Name="AuctionRef" ColumnName="AuctionRef" />
+          <ScalarProperty Name="DomainName" ColumnName="DomainName" />
+          <ScalarProperty Name="AuctionID" ColumnName="AuctionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AuctionHistory">
+      <EntityTypeMapping TypeName="AuctionSniperModel.AuctionHistory">
+        <MappingFragment StoreEntitySet="AuctionHistory">
+          <ScalarProperty Name="AuctionLink" ColumnName="AuctionLink" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AuctionHistoryView">
+      <EntityTypeMapping TypeName="AuctionSniperModel.AuctionHistoryView">
+        <MappingFragment StoreEntitySet="AuctionHistoryView">
+          <ScalarProperty Name="AuctionLink" ColumnName="AuctionLink" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Alerts">
+      <EntityTypeMapping TypeName="AuctionSniperModel.Alerts">
+        <MappingFragment StoreEntitySet="Alerts">
+          <ScalarProperty Name="Custom" ColumnName="Custom" />
+          <ScalarProperty Name="AuctionID" ColumnName="AuctionID" />
+          <ScalarProperty Name="Processed" ColumnName="Processed" />
+          <ScalarProperty Name="TriggerTime" ColumnName="TriggerTime" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="AlertID" ColumnName="AlertID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EventLog">
+      <EntityTypeMapping TypeName="AuctionSniperModel.EventLog">
+        <MappingFragment StoreEntitySet="EventLog">
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Event" ColumnName="Event" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="USP_SearchQueryBuilder2" FunctionName="AuctionSniperModel.Store.USP_SearchQueryBuilder2" />
+    <EntitySetMapping Name="SearchTable">
+      <EntityTypeMapping TypeName="AuctionSniperModel.SearchTable">
+        <MappingFragment StoreEntitySet="SearchTable">
+          <ScalarProperty Name="ItemOrder" ColumnName="ItemOrder" />
+          <ScalarProperty Name="DataType" ColumnName="DataType" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+          <ScalarProperty Name="SearchValue" ColumnName="SearchValue" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SearchLayout">
+      <EntityTypeMapping TypeName="AuctionSniperModel.SearchLayout">
+        <MappingFragment StoreEntitySet="SearchLayout">
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+          <ScalarProperty Name="SearchValue" ColumnName="SearchValue" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdvSearch">
+      <EntityTypeMapping TypeName="AuctionSniperModel.AdvSearch">
+        <MappingFragment StoreEntitySet="AdvSearch">
+          <ScalarProperty Name="IsGOdaddy" ColumnName="IsGOdaddy" />
+          <ScalarProperty Name="IsAuction" ColumnName="IsAuction" />
+          <ScalarProperty Name="Ref" ColumnName="Ref" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="EsitmateEnd" ColumnName="EsitmateEnd" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="DomainPrice" ColumnName="DomainPrice" />
+          <ScalarProperty Name="SemTarf" ColumnName="SemTarf" />
+          <ScalarProperty Name="SimilarWeb" ColumnName="SimilarWeb" />
+          <ScalarProperty Name="MajDom" ColumnName="MajDom" />
+          <ScalarProperty Name="MozDom" ColumnName="MozDom" />
+          <ScalarProperty Name="AlexARank" ColumnName="AlexARank" />
+          <ScalarProperty Name="TF" ColumnName="TF" />
+          <ScalarProperty Name="CF" ColumnName="CF" />
+          <ScalarProperty Name="MozTrust" ColumnName="MozTrust" />
+          <ScalarProperty Name="MozRank" ColumnName="MozRank" />
+          <ScalarProperty Name="MOZPA" ColumnName="MOZPA" />
+          <ScalarProperty Name="MOZDA" ColumnName="MOZDA" />
+          <ScalarProperty Name="PageRank" ColumnName="PageRank" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="DomainLink" ColumnName="DomainLink" />
+          <ScalarProperty Name="DomainName" ColumnName="DomainName" />
+          <ScalarProperty Name="AdvSearchID" ColumnName="AdvSearchID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SearchConfig">
+      <EntityTypeMapping TypeName="AuctionSniperModel.SearchConfig">
+        <MappingFragment StoreEntitySet="SearchConfig">
+          <ScalarProperty Name="end_misc" ColumnName="end_misc" />
+          <ScalarProperty Name="end_us" ColumnName="end_us" />
+          <ScalarProperty Name="end_uk" ColumnName="end_uk" />
+          <ScalarProperty Name="end_tv" ColumnName="end_tv" />
+          <ScalarProperty Name="end_su" ColumnName="end_su" />
+          <ScalarProperty Name="end_se" ColumnName="end_se" />
+          <ScalarProperty Name="end_ru" ColumnName="end_ru" />
+          <ScalarProperty Name="end_pl" ColumnName="end_pl" />
+          <ScalarProperty Name="end_org" ColumnName="end_org" />
+          <ScalarProperty Name="end_nu" ColumnName="end_nu" />
+          <ScalarProperty Name="end_nl" ColumnName="end_nl" />
+          <ScalarProperty Name="end_net" ColumnName="end_net" />
+          <ScalarProperty Name="end_mx" ColumnName="end_mx" />
+          <ScalarProperty Name="end_mobi" ColumnName="end_mobi" />
+          <ScalarProperty Name="end_me" ColumnName="end_me" />
+          <ScalarProperty Name="end_it" ColumnName="end_it" />
+          <ScalarProperty Name="end_info" ColumnName="end_info" />
+          <ScalarProperty Name="end_in" ColumnName="end_in" />
+          <ScalarProperty Name="end_ie" ColumnName="end_ie" />
+          <ScalarProperty Name="end_fr" ColumnName="end_fr" />
+          <ScalarProperty Name="end_eu" ColumnName="end_eu" />
+          <ScalarProperty Name="end_de" ColumnName="end_de" />
+          <ScalarProperty Name="end_com" ColumnName="end_com" />
+          <ScalarProperty Name="end_co" ColumnName="end_co" />
+          <ScalarProperty Name="end_ch" ColumnName="end_ch" />
+          <ScalarProperty Name="end_cc" ColumnName="end_cc" />
+          <ScalarProperty Name="end_ca" ColumnName="end_ca" />
+          <ScalarProperty Name="end_biz" ColumnName="end_biz" />
+          <ScalarProperty Name="end_be" ColumnName="end_be" />
+          <ScalarProperty Name="end_au" ColumnName="end_au" />
+          <ScalarProperty Name="end_at" ColumnName="end_at" />
+          <ScalarProperty Name="end_asia" ColumnName="end_asia" />
+          <ScalarProperty Name="RequireSemrushTraffic" ColumnName="RequireSemrushTraffic" />
+          <ScalarProperty Name="Droplists" ColumnName="Droplists" />
+          <ScalarProperty Name="PatternType" ColumnName="PatternType" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="KeywordSearchType" ColumnName="KeywordSearchType" />
+          <ScalarProperty Name="Keyword" ColumnName="Keyword" />
+          <ScalarProperty Name="SearchType" ColumnName="SearchType" />
+          <ScalarProperty Name="SalesTypeOffer" ColumnName="SalesTypeOffer" />
+          <ScalarProperty Name="OnlyDigits" ColumnName="OnlyDigits" />
+          <ScalarProperty Name="AllowDigits" ColumnName="AllowDigits" />
+          <ScalarProperty Name="AllowDash" ColumnName="AllowDash" />
+          <ScalarProperty Name="dmoz" ColumnName="dmoz" />
+          <ScalarProperty Name="GoogleIndex" ColumnName="GoogleIndex" />
+          <ScalarProperty Name="ChildTopCat" ColumnName="ChildTopCat" />
+          <ScalarProperty Name="ParentTopCat" ColumnName="ParentTopCat" />
+          <ScalarProperty Name="ChildCat" ColumnName="ChildCat" />
+          <ScalarProperty Name="ParentCat" ColumnName="ParentCat" />
+          <ScalarProperty Name="EndInUpper" ColumnName="EndInUpper" />
+          <ScalarProperty Name="EndInLower" ColumnName="EndInLower" />
+          <ScalarProperty Name="HideBrand" ColumnName="HideBrand" />
+          <ScalarProperty Name="HideSpammy" ColumnName="HideSpammy" />
+          <ScalarProperty Name="HideAdult" ColumnName="HideAdult" />
+          <ScalarProperty Name="RequireAv" ColumnName="RequireAv" />
+          <ScalarProperty Name="SimilarWebRankReq" ColumnName="SimilarWebRankReq" />
+          <ScalarProperty Name="SemrushRankReq" ColumnName="SemrushRankReq" />
+          <ScalarProperty Name="AlexARankRequired" ColumnName="AlexARankRequired" />
+          <ScalarProperty Name="QuantMillion" ColumnName="QuantMillion" />
+          <ScalarProperty Name="MajMillion" ColumnName="MajMillion" />
+          <ScalarProperty Name="RequireSemrushKey" ColumnName="RequireSemrushKey" />
+          <ScalarProperty Name="FakeAlexa" ColumnName="FakeAlexa" />
+          <ScalarProperty Name="FakePR" ColumnName="FakePR" />
+          <ScalarProperty Name="Sedo" ColumnName="Sedo" />
+          <ScalarProperty Name="SnapName" ColumnName="SnapName" />
+          <ScalarProperty Name="Dynadot" ColumnName="Dynadot" />
+          <ScalarProperty Name="NameJet" ColumnName="NameJet" />
+          <ScalarProperty Name="GoDaddy" ColumnName="GoDaddy" />
+          <ScalarProperty Name="Expired" ColumnName="Expired" />
+          <ScalarProperty Name="PendingDelete" ColumnName="PendingDelete" />
+          <ScalarProperty Name="CloseOut" ColumnName="CloseOut" />
+          <ScalarProperty Name="BarginBin" ColumnName="BarginBin" />
+          <ScalarProperty Name="BuyNow" ColumnName="BuyNow" />
+          <ScalarProperty Name="Auction" ColumnName="Auction" />
+          <ScalarProperty Name="GPlusSharesMax" ColumnName="GPlusSharesMax" />
+          <ScalarProperty Name="GPlusSharesMin" ColumnName="GPlusSharesMin" />
+          <ScalarProperty Name="GPlusShares" ColumnName="GPlusShares" />
+          <ScalarProperty Name="PintrestSharesMax" ColumnName="PintrestSharesMax" />
+          <ScalarProperty Name="PintrestSharesMin" ColumnName="PintrestSharesMin" />
+          <ScalarProperty Name="PintrestShares" ColumnName="PintrestShares" />
+          <ScalarProperty Name="RedditSharesMax" ColumnName="RedditSharesMax" />
+          <ScalarProperty Name="RedditSharesMin" ColumnName="RedditSharesMin" />
+          <ScalarProperty Name="RedditShares" ColumnName="RedditShares" />
+          <ScalarProperty Name="TwitterSharesMax" ColumnName="TwitterSharesMax" />
+          <ScalarProperty Name="TwitterSharesMin" ColumnName="TwitterSharesMin" />
+          <ScalarProperty Name="TwitterShares" ColumnName="TwitterShares" />
+          <ScalarProperty Name="FacebookSharesMax" ColumnName="FacebookSharesMax" />
+          <ScalarProperty Name="FacebookSharesMin" ColumnName="FacebookSharesMin" />
+          <ScalarProperty Name="FacebookLikesMax" ColumnName="FacebookLikesMax" />
+          <ScalarProperty Name="FacebookLikesMin" ColumnName="FacebookLikesMin" />
+          <ScalarProperty Name="DomainPriceMax" ColumnName="DomainPriceMax" />
+          <ScalarProperty Name="DomainPriceMin" ColumnName="DomainPriceMin" />
+          <ScalarProperty Name="DomainPrice" ColumnName="DomainPrice" />
+          <ScalarProperty Name="DomainAgeMax" ColumnName="DomainAgeMax" />
+          <ScalarProperty Name="DomainAgeMin" ColumnName="DomainAgeMin" />
+          <ScalarProperty Name="MajesticIPSMax" ColumnName="MajesticIPSMax" />
+          <ScalarProperty Name="MajesticIPSMin" ColumnName="MajesticIPSMin" />
+          <ScalarProperty Name="MajesticIPS" ColumnName="MajesticIPS" />
+          <ScalarProperty Name="MOZDAMax" ColumnName="MOZDAMax" />
+          <ScalarProperty Name="MOZDAMin" ColumnName="MOZDAMin" />
+          <ScalarProperty Name="MOZDA" ColumnName="MOZDA" />
+          <ScalarProperty Name="MOZPAMax" ColumnName="MOZPAMax" />
+          <ScalarProperty Name="MOZPAMin" ColumnName="MOZPAMin" />
+          <ScalarProperty Name="MOZPA" ColumnName="MOZPA" />
+          <ScalarProperty Name="MajesticCitationFlowMin" ColumnName="MajesticCitationFlowMin" />
+          <ScalarProperty Name="MajesticCitationFlowMax" ColumnName="MajesticCitationFlowMax" />
+          <ScalarProperty Name="MajesticTrustFlowMax" ColumnName="MajesticTrustFlowMax" />
+          <ScalarProperty Name="MajesticTrustFlowMin" ColumnName="MajesticTrustFlowMin" />
+          <ScalarProperty Name="MajesticBacklinksMAX" ColumnName="MajesticBacklinksMAX" />
+          <ScalarProperty Name="MajesticBacklinksMin" ColumnName="MajesticBacklinksMin" />
+          <ScalarProperty Name="PRMax" ColumnName="PRMax" />
+          <ScalarProperty Name="PRMin" ColumnName="PRMin" />
+          <ScalarProperty Name="RequirePR" ColumnName="RequirePR" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SystemConfig">
+      <EntityTypeMapping TypeName="AuctionSniperModel.SystemConfig">
+        <MappingFragment StoreEntitySet="SystemConfig">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Chart_AuctionHistory">
+      <EntityTypeMapping TypeName="AuctionSniperModel.Chart_AuctionHistory">
+        <MappingFragment StoreEntitySet="Chart_AuctionHistory">
+          <ScalarProperty Name="AuctionsWonTotal" ColumnName="AuctionsWonTotal" />
+          <ScalarProperty Name="AuctionsThisMonth" ColumnName="AuctionsThisMonth" />
+          <ScalarProperty Name="TotalAuctions" ColumnName="TotalAuctions" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Chart_AuctionsEnding">
+      <EntityTypeMapping TypeName="AuctionSniperModel.Chart_AuctionsEnding">
+        <MappingFragment StoreEntitySet="Chart_AuctionsEnding">
+          <ScalarProperty Name="MinBid" ColumnName="MinBid" />
+          <ScalarProperty Name="MyBid" ColumnName="MyBid" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="DomainName" ColumnName="DomainName" />
+          <ScalarProperty Name="AuctionRef" ColumnName="AuctionRef" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Chart_PopularDomainsThisMonth">
+      <EntityTypeMapping TypeName="AuctionSniperModel.Chart_PopularDomainsThisMonth">
+        <MappingFragment StoreEntitySet="Chart_PopularDomainsThisMonth">
+          <ScalarProperty Name="Bids" ColumnName="Bids" />
+          <ScalarProperty Name="DomainName" ColumnName="DomainName" />
+          <ScalarProperty Name="AuctionRef" ColumnName="AuctionRef" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
