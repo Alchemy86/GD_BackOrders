@@ -67,6 +67,9 @@
     <Compile Include="AuctionSearch.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="BackOrders.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Chart_AuctionHistory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

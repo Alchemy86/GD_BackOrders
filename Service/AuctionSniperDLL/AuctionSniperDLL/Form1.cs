@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AuctionSniperDLL.Business;
+using AuctionSniperDLL.Business.Sites;
 
 namespace AuctionSniperDLL
 {
@@ -21,6 +22,9 @@ namespace AuctionSniperDLL
         private void button1_Click(object sender, EventArgs e)
         {
             //Email.SendEmail(AppConfig.GetSystemConfig("AlertEmail"),"DAS Service Monitor","Testing Dude");
+            GoDaddyAuctions2Cs gd = new GoDaddyAuctions2Cs();
+            var moose = gd.Login("nycman789", "Wearefromnyc1");
+            gd.CheckBackOrderDomain_IsValid("lunchboxcode.com");
         }
     }
 }

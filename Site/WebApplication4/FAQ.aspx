@@ -9,13 +9,12 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="MainContentHolder" runat="server">
     <!--FAQ-->
     <div class="col-md-10 col-md-offset-1">
-        <h3>Countdown Doesnt End when the auction does?</h3>
-        <p>Of course it does! GoDaddy end times are based on the time where their servers are based, not nessescerally the same time as your current time zone.
-        If it says it ends at 9pm and thats and hour away for you - it could well be several more or less. Just keep your eye on the timers and bid history, that will keep you sane.
+        <h3>What do I need to do?</h3>
+        <p>Once you have setup yout GoDaddy Account to be used, your good to go. Simpy add new Backorders from the <a href="BackOrder.aspx">Backorders</a> page and the remote service will complete the submission at the set time you requested.
         </p>
         <br/>
-        <h3>Why can't I bid this domain? It doesn't show up in search.</h3>
-        <p>DAS is specifically built for Auction-format listings where you can set bids. You won't be able to use the sniper function for "Offer" listings or "Buy-it-now" domains
+        <h3>How can i get help?</h3>
+        <p>If something is wrong you can submit any bugs or request using the "report a bug" option at the bottom of the site
         </p>
     </div>
 </asp:Content>

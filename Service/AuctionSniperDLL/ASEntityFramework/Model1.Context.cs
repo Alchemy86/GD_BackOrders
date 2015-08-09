@@ -15,7 +15,7 @@ namespace ASEntityFramework
     using System.Data.Entity.Core.Objects;
     using System.Data.Objects.DataClasses;
     using System.Linq;
-    
+
     public partial class ASEntities : DbContext
     {
         public ASEntities()
@@ -44,6 +44,7 @@ namespace ASEntityFramework
         public DbSet<Chart_AuctionHistory> Chart_AuctionHistory { get; set; }
         public DbSet<Chart_AuctionsEnding> Chart_AuctionsEnding { get; set; }
         public DbSet<Chart_PopularDomainsThisMonth> Chart_PopularDomainsThisMonth { get; set; }
+        public DbSet<BackOrders> BackOrders { get; set; }
     
         public virtual int USP_SearchQueryBuilder2(string userID)
         {

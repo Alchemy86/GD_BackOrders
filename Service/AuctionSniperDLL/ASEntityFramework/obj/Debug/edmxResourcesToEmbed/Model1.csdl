@@ -32,6 +32,11 @@
     <EntitySet Name="Chart_AuctionHistory" EntityType="AuctionSniperModel.Chart_AuctionHistory" />
     <EntitySet Name="Chart_AuctionsEnding" EntityType="AuctionSniperModel.Chart_AuctionsEnding" />
     <EntitySet Name="Chart_PopularDomainsThisMonth" EntityType="AuctionSniperModel.Chart_PopularDomainsThisMonth" />
+    <EntitySet Name="BackOrders" EntityType="AuctionSniperModel.BackOrders" />
+    <AssociationSet Name="FK_BackOrders_GoDaddyAccount" Association="AuctionSniperModel.FK_BackOrders_GoDaddyAccount">
+      <End Role="GoDaddyAccount" EntitySet="GoDaddyAccount" />
+      <End Role="BackOrders" EntitySet="BackOrders" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="GoDaddyAccount">
     <Key>
@@ -45,6 +50,7 @@
     <NavigationProperty Name="Auctions" Relationship="AuctionSniperModel.FK_Auctions_GoDaddyAccount" FromRole="GoDaddyAccount" ToRole="Auctions" />
     <NavigationProperty Name="AuctionSearch" Relationship="AuctionSniperModel.FK_Auctions_GoDaddyAccount2" FromRole="GoDaddyAccount" ToRole="AuctionSearch" />
     <Property Type="Boolean" Name="Verified" Nullable="false" />
+    <NavigationProperty Name="BackOrders" Relationship="AuctionSniperModel.FK_BackOrders_GoDaddyAccount" FromRole="GoDaddyAccount" ToRole="BackOrders" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -198,6 +204,7 @@
     <Property Name="SearchValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="FieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Order" Type="Int32" Nullable="false" />
+    <Property Name="ControlType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="AdvSearch">
     <Key>
@@ -390,4 +397,31 @@
     <Property Name="DomainName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="Bids" Type="Int32" />
   </EntityType>
+  <EntityType Name="BackOrders">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Guid" Nullable="false" />
+    <Property Name="DomainName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="AlertEmail1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="AlertEmail2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DateToOrder" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreditsToUse" Type="Int32" Nullable="false" />
+    <Property Name="Private" Type="Boolean" Nullable="false" />
+    <Property Name="GoDaddyAccount" Type="Guid" Nullable="false" />
+    <Property Name="Processed" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="GoDaddyAccount1" Relationship="AuctionSniperModel.FK_BackOrders_GoDaddyAccount" FromRole="BackOrders" ToRole="GoDaddyAccount" />
+  </EntityType>
+  <Association Name="FK_BackOrders_GoDaddyAccount">
+    <End Type="AuctionSniperModel.GoDaddyAccount" Role="GoDaddyAccount" Multiplicity="1" />
+    <End Type="AuctionSniperModel.BackOrders" Role="BackOrders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GoDaddyAccount">
+        <PropertyRef Name="AccountID" />
+      </Principal>
+      <Dependent Role="BackOrders">
+        <PropertyRef Name="GoDaddyAccount" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

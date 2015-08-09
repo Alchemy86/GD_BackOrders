@@ -51,10 +51,10 @@ html, body
 }
 
 #cornerlogo {
-    background-image: url("../img/sun.png");
+    background-image: url("../img/download2.png");
     background-repeat: no-repeat;
-    background-position-x: -60px;
-    background-position-y: -80px;
+    background-position-x: 20px;
+    background-position-y: 5px;
     height: 100%;
 }
 

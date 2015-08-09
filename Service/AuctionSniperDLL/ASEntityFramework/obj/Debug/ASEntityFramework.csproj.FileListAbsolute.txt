@@ -38,3 +38,12 @@ C:\git\DASService\AuctionSniperDLL\ASEntityFramework\bin\Debug\EntityFramework.S
 C:\git\DASService\AuctionSniperDLL\ASEntityFramework\obj\Debug\ASEntityFramework.csprojResolveAssemblyReference.cache
 C:\git\DASService\AuctionSniperDLL\ASEntityFramework\obj\Debug\ASEntityFramework.dll
 C:\git\DASService\AuctionSniperDLL\ASEntityFramework\obj\Debug\ASEntityFramework.pdb
+C:\git\GD_BackOrders\Service\AuctionSniperDLL\ASEntityFramework\bin\Debug\ASEntityFramework.dll.config
+C:\git\GD_BackOrders\Service\AuctionSniperDLL\ASEntityFramework\bin\Debug\ASEntityFramework.dll
+C:\git\GD_BackOrders\Service\AuctionSniperDLL\ASEntityFramework\bin\Debug\ASEntityFramework.pdb
+C:\git\GD_BackOrders\Service\AuctionSniperDLL\ASEntityFramework\bin\Debug\EntityFramework.dll
+C:\git\GD_BackOrders\Service\AuctionSniperDLL\ASEntityFramework\bin\Debug\EntityFramework.SqlServer.dll
+C:\git\GD_BackOrders\Service\AuctionSniperDLL\ASEntityFramework\bin\Debug\EntityFramework.xml
+C:\git\GD_BackOrders\Service\AuctionSniperDLL\ASEntityFramework\bin\Debug\EntityFramework.SqlServer.xml
+C:\git\GD_BackOrders\Service\AuctionSniperDLL\ASEntityFramework\obj\Debug\ASEntityFramework.dll
+C:\git\GD_BackOrders\Service\AuctionSniperDLL\ASEntityFramework\obj\Debug\ASEntityFramework.pdb

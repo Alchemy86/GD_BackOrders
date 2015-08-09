@@ -18,6 +18,7 @@ namespace ASEntityFramework
         {
             this.Auctions = new HashSet<Auctions>();
             this.AuctionSearch = new HashSet<AuctionSearch>();
+            this.BackOrders = new HashSet<BackOrders>();
         }
     
         public System.Guid AccountID { get; set; }
@@ -29,5 +30,6 @@ namespace ASEntityFramework
         public virtual Users Users { get; set; }
         public virtual ICollection<Auctions> Auctions { get; set; }
         public virtual ICollection<AuctionSearch> AuctionSearch { get; set; }
+        public virtual ICollection<BackOrders> BackOrders { get; set; }
     }
 }

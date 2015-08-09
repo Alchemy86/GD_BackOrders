@@ -36,7 +36,7 @@ namespace WebApplication4.Model
             }
             DasApi.Email(AppConfig.GetSystemConfig(AppSettings.AlertEmail), "Bug Report",
                                  "Account: " + user.Username +  Environment.NewLine +
-                                 "Description: " + message, "Service Manager Bug Report");
+                                 "Description: " + message, "DomainBackOrder: Bug Report");
 
             return true;
         }

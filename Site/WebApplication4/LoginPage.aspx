@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Domain Auction Sniper - Login</title>
+    <title>Godaddy Backorder - Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
     <link href = "css/bootstrap.css" rel = "stylesheet" runat="server" />
@@ -19,11 +19,11 @@
 
         <div class="login-container">
             <div class="container">
-                <div class="label1">
-                    <img src="img/domain-auction-sniper-logo.png" />
-                </div>
               <form class="form-signin" role="form" runat="server">
-                  <h2 class="form-signin-heading">Sign in to <br/><strong>Domain Auction Sniper</strong></h2>
+                  <h2 class="form-signin-heading">                
+                      <div class="label1">
+                            <img src="img/godaddy.ico" />GoDaddy Backorder Login
+                      </div></h2>
                 <asp:TextBox type="email" class="form-control" ID="UserEmail" placeholder="Email Address" runat="server" required autofocus/>
                 <asp:TextBox type="password" class="form-control" placeholder="Password" ID="UserPass" TextMode="Password" runat="server" required />
                 <div class="checkbox text-center">
@@ -39,7 +39,7 @@
               </form>
                 <br/>
                 <div class="label1">
-                    <span style="color: #000000">Help:</span> <a class="label1" style="color: #006400; text-decoration: underline;" href="http://domainauctionsniper.com/wp-login.php?action=lostpassword">I can't sign in or I forgot my username/password</a>
+                    <span style="color: #000000">Help:</span> <a class="label1" style="color: #006400; text-decoration: underline;" href="#">I can't sign in or I forgot my username/password</a>
                 </div>
 
             </div>
@@ -47,8 +47,8 @@
    </div>
     <div class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
-            <p class="navbar-text pull-left">Auction Sniper WEB</p>
-            <a href="http://domainauctionsniper.com" target="_blank" class="navbar-btn btn-danger btn pull-right">Sign up NOW</a>
+            <p class="navbar-text pull-left">GoDaddy Backorder Tool</p>
+            <a href="#" target="_blank" class="navbar-btn btn-danger btn pull-right">Sign up NOW</a>
         </div>
     </div>
 </body>

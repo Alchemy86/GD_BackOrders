@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
@@ -181,6 +182,26 @@ namespace AuctionSniperDLL.Business.Sites
             }
 
             return endDate;
+        }
+
+        public bool CheckBackOrderDomain_IsValid(string domainName)
+        {
+            Get("https://dcc.godaddy.com/dcc40/Default.aspx?regionsite=au&activeview=monitoring&marketid=en-AU");
+            Get("https://dcc.godaddy.com/dcc40/DropinLoad_Monitor.aspx?controlRequest=ActionMonitorSetupBackorders&initiator=255&guid=98956E7A-FE66-5238-EA0D-3634C2BC23B1");
+            var data = "{\"sInput\":\"<PARAMS><PARAM name=\\\"Type\\\" value=\\\"BackorderPublic\\\" /><PARAM name=\\\"DomainNames\\\" value=\\\"" + domainName +"\\\" /></PARAMS>\"}";
+            var values = new Dictionary<string, string> {{"Content-Type", "application/json; charset=UTF-8"}};
+            var results = Post("https://dcc.godaddy.com/dcc40/MonitorAction_SetupWS.asmx/ValidateDomainNames", data, values);
+
+            return results.Contains("SUCCESS|");
+        }
+
+        public bool SubmitBackOrder(string domainName)
+        {
+            if (CheckBackOrderDomain_IsValid(domainName))
+            {
+                
+            }
+            return false;
         }
 
         public IQueryable<AuctionSearch> Search(string searchText)

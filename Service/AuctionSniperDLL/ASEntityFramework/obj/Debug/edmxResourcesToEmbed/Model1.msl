@@ -126,6 +126,7 @@
     <EntitySetMapping Name="SearchLayout">
       <EntityTypeMapping TypeName="AuctionSniperModel.SearchLayout">
         <MappingFragment StoreEntitySet="SearchLayout">
+          <ScalarProperty Name="ControlType" ColumnName="ControlType" />
           <ScalarProperty Name="Order" ColumnName="Order" />
           <ScalarProperty Name="FieldName" ColumnName="FieldName" />
           <ScalarProperty Name="SearchValue" ColumnName="SearchValue" />
@@ -322,6 +323,21 @@
           <ScalarProperty Name="Bids" ColumnName="Bids" />
           <ScalarProperty Name="DomainName" ColumnName="DomainName" />
           <ScalarProperty Name="AuctionRef" ColumnName="AuctionRef" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BackOrders">
+      <EntityTypeMapping TypeName="AuctionSniperModel.BackOrders">
+        <MappingFragment StoreEntitySet="BackOrders">
+          <ScalarProperty Name="Processed" ColumnName="Processed" />
+          <ScalarProperty Name="GoDaddyAccount" ColumnName="GoDaddyAccount" />
+          <ScalarProperty Name="Private" ColumnName="Private" />
+          <ScalarProperty Name="CreditsToUse" ColumnName="CreditsToUse" />
+          <ScalarProperty Name="DateToOrder" ColumnName="DateToOrder" />
+          <ScalarProperty Name="AlertEmail2" ColumnName="AlertEmail2" />
+          <ScalarProperty Name="AlertEmail1" ColumnName="AlertEmail1" />
+          <ScalarProperty Name="DomainName" ColumnName="DomainName" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

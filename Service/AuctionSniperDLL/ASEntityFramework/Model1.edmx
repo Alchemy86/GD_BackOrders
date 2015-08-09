@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AuctionSniperModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AuctionSniperModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdvSearch">
           <Key>
             <PropertyRef Name="AdvSearchID" />
@@ -93,6 +93,20 @@
           <Property Name="AccountID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="100" />
           <Property Name="MyBid" Type="int" />
+          <Property Name="Processed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BackOrders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DomainName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AlertEmail1" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="AlertEmail2" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateToOrder" Type="datetime" Nullable="false" />
+          <Property Name="CreditsToUse" Type="int" Nullable="false" />
+          <Property Name="Private" Type="bit" Nullable="false" />
+          <Property Name="GoDaddyAccount" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Processed" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="EventLog">
@@ -244,6 +258,7 @@
           <Property Name="SearchValue" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="FieldName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="ControlType" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="SearchTable">
           <Key>
@@ -356,6 +371,18 @@ warning 6002: The table/view 'AuctionSniper.dbo.Chart_PopularDomainsThisMonth' d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BackOrders_GoDaddyAccount">
+          <End Role="GoDaddyAccount" Type="Self.GoDaddyAccount" Multiplicity="1" />
+          <End Role="BackOrders" Type="Self.BackOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GoDaddyAccount">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="BackOrders">
+              <PropertyRef Name="GoDaddyAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_GoDaddyAccount_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -382,6 +409,7 @@ warning 6002: The table/view 'AuctionSniper.dbo.Chart_PopularDomainsThisMonth' d
           <EntitySet Name="AuctionHistory" EntityType="Self.AuctionHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Auctions" EntityType="Self.Auctions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AuctionSearch" EntityType="Self.AuctionSearch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BackOrders" EntityType="Self.BackOrders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EventLog" EntityType="Self.EventLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoDaddyAccount" EntityType="Self.GoDaddyAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SearchConfig" EntityType="Self.SearchConfig" Schema="dbo" store:Type="Tables" />
@@ -430,6 +458,10 @@ FROM [dbo].[Chart_PopularDomainsThisMonth] AS [Chart_PopularDomainsThisMonth]</D
             <End Role="GoDaddyAccount" EntitySet="GoDaddyAccount" />
             <End Role="AuctionSearch" EntitySet="AuctionSearch" />
           </AssociationSet>
+          <AssociationSet Name="FK_BackOrders_GoDaddyAccount" Association="Self.FK_BackOrders_GoDaddyAccount">
+            <End Role="GoDaddyAccount" EntitySet="GoDaddyAccount" />
+            <End Role="BackOrders" EntitySet="BackOrders" />
+          </AssociationSet>
           <AssociationSet Name="FK_GoDaddyAccount_Users" Association="Self.FK_GoDaddyAccount_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="GoDaddyAccount" EntitySet="GoDaddyAccount" />
@@ -471,6 +503,11 @@ FROM [dbo].[Chart_PopularDomainsThisMonth] AS [Chart_PopularDomainsThisMonth]</D
           <EntitySet Name="Chart_AuctionHistory" EntityType="AuctionSniperModel.Chart_AuctionHistory" />
           <EntitySet Name="Chart_AuctionsEnding" EntityType="AuctionSniperModel.Chart_AuctionsEnding" />
           <EntitySet Name="Chart_PopularDomainsThisMonth" EntityType="AuctionSniperModel.Chart_PopularDomainsThisMonth" />
+          <EntitySet Name="BackOrders" EntityType="AuctionSniperModel.BackOrders" />
+          <AssociationSet Name="FK_BackOrders_GoDaddyAccount" Association="AuctionSniperModel.FK_BackOrders_GoDaddyAccount">
+            <End Role="GoDaddyAccount" EntitySet="GoDaddyAccount" />
+            <End Role="BackOrders" EntitySet="BackOrders" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="GoDaddyAccount">
           <Key>
@@ -484,6 +521,7 @@ FROM [dbo].[Chart_PopularDomainsThisMonth] AS [Chart_PopularDomainsThisMonth]</D
           <NavigationProperty Name="Auctions" Relationship="AuctionSniperModel.FK_Auctions_GoDaddyAccount" FromRole="GoDaddyAccount" ToRole="Auctions" />
           <NavigationProperty Name="AuctionSearch" Relationship="AuctionSniperModel.FK_Auctions_GoDaddyAccount2" FromRole="GoDaddyAccount" ToRole="AuctionSearch" />
           <Property Type="Boolean" Name="Verified" Nullable="false" />
+          <NavigationProperty Name="BackOrders" Relationship="AuctionSniperModel.FK_BackOrders_GoDaddyAccount" FromRole="GoDaddyAccount" ToRole="BackOrders" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -637,6 +675,7 @@ FROM [dbo].[Chart_PopularDomainsThisMonth] AS [Chart_PopularDomainsThisMonth]</D
           <Property Name="SearchValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="ControlType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="AdvSearch">
           <Key>
@@ -829,6 +868,33 @@ FROM [dbo].[Chart_PopularDomainsThisMonth] AS [Chart_PopularDomainsThisMonth]</D
           <Property Name="DomainName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Bids" Type="Int32" />
         </EntityType>
+        <EntityType Name="BackOrders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Guid" Nullable="false" />
+          <Property Name="DomainName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AlertEmail1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AlertEmail2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateToOrder" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreditsToUse" Type="Int32" Nullable="false" />
+          <Property Name="Private" Type="Boolean" Nullable="false" />
+          <Property Name="GoDaddyAccount" Type="Guid" Nullable="false" />
+          <Property Name="Processed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="GoDaddyAccount1" Relationship="AuctionSniperModel.FK_BackOrders_GoDaddyAccount" FromRole="BackOrders" ToRole="GoDaddyAccount" />
+        </EntityType>
+        <Association Name="FK_BackOrders_GoDaddyAccount">
+          <End Type="AuctionSniperModel.GoDaddyAccount" Role="GoDaddyAccount" Multiplicity="1" />
+          <End Type="AuctionSniperModel.BackOrders" Role="BackOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GoDaddyAccount">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="BackOrders">
+              <PropertyRef Name="GoDaddyAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -960,6 +1026,7 @@ FROM [dbo].[Chart_PopularDomainsThisMonth] AS [Chart_PopularDomainsThisMonth]</D
           <EntitySetMapping Name="SearchLayout">
             <EntityTypeMapping TypeName="AuctionSniperModel.SearchLayout">
               <MappingFragment StoreEntitySet="SearchLayout">
+                <ScalarProperty Name="ControlType" ColumnName="ControlType" />
                 <ScalarProperty Name="Order" ColumnName="Order" />
                 <ScalarProperty Name="FieldName" ColumnName="FieldName" />
                 <ScalarProperty Name="SearchValue" ColumnName="SearchValue" />
@@ -1156,6 +1223,21 @@ FROM [dbo].[Chart_PopularDomainsThisMonth] AS [Chart_PopularDomainsThisMonth]</D
                 <ScalarProperty Name="Bids" ColumnName="Bids" />
                 <ScalarProperty Name="DomainName" ColumnName="DomainName" />
                 <ScalarProperty Name="AuctionRef" ColumnName="AuctionRef" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BackOrders">
+            <EntityTypeMapping TypeName="AuctionSniperModel.BackOrders">
+              <MappingFragment StoreEntitySet="BackOrders">
+                <ScalarProperty Name="Processed" ColumnName="Processed" />
+                <ScalarProperty Name="GoDaddyAccount" ColumnName="GoDaddyAccount" />
+                <ScalarProperty Name="Private" ColumnName="Private" />
+                <ScalarProperty Name="CreditsToUse" ColumnName="CreditsToUse" />
+                <ScalarProperty Name="DateToOrder" ColumnName="DateToOrder" />
+                <ScalarProperty Name="AlertEmail2" ColumnName="AlertEmail2" />
+                <ScalarProperty Name="AlertEmail1" ColumnName="AlertEmail1" />
+                <ScalarProperty Name="DomainName" ColumnName="DomainName" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
