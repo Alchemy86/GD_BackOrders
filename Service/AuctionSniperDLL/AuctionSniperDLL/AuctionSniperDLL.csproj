@@ -78,6 +78,7 @@
     <Compile Include="Business\HttpHelper.cs" />
     <Compile Include="Business\ManagedObject.cs" />
     <Compile Include="Business\PropertyComparer.cs" />
+    <Compile Include="Business\Settings.cs" />
     <Compile Include="Business\Sites\DomCop.cs" />
     <Compile Include="Business\Sites\GoDaddyAuctions.cs" />
     <Compile Include="Business\Sites\GoDaddyAuctions2cs.cs" />

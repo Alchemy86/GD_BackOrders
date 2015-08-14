@@ -68,8 +68,8 @@
         <div id="my-tab-content" class="tab-content">
             <div class="tab-pane active" id="Current">
                 <cc1:LunchboxGridView OnRowCommand="MyBids_RowCommand" ID="LunchboxGridView2" runat="server" AutoGenerateColumns="False"  
-                    DataKeyNames="OrderID"  CellPadding="4" CssClass="gridOverall" GridLines="None" 
-                    AllowSorting="True" Width="100%" onsorting="gvAgency_Sorting" >
+                    OnRowDataBound="grdView_OnRowDataBoundCurrent"  AccessKeyDataKeyNames="OrderID"  CellPadding="4" CssClass="gridOverall" GridLines="None" 
+                    AllowSorting="True" Width="100%" onsorting="gvAgency_Sorting" OnRowEditing="LunchboxGridView2_OnRowEditing">
                     <EmptyDataTemplate>No items currenlty set</EmptyDataTemplate>
                     <Columns>
                         <asp:TemplateField ItemStyle-Width="20px">
@@ -118,7 +118,7 @@
                                 <span id="timer_<%# Container.DataItemIndex %>"
                                     class="timer" 
                                     data-start='<%#Eval("DateToOrder", "{0:M/dd/yyyy H:mm:ss}")%>'
-                                    data-currentTime='<%# DateTime.Now.ToString("M/dd/yyyy H:mm:ss") %>'></span>
+                                    data-currentTime='<%# AuctionSniperDLL.Business.Settings.GetDateTimeOffSet().ToString("M/dd/yyyy H:mm:ss") %>'></span>
                             </ItemTemplate>
                         </asp:TemplateField>
                     

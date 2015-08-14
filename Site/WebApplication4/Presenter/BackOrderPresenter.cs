@@ -29,22 +29,34 @@ namespace WebApplication4.Presenter
             return true;
         }
 
+        public void DeleteBackOrder(Guid backorder)
+        {
+            Modal.DeleteBackOrder(backorder);
+        }
+
         public IQueryable<BackOrders> GetBackOrders(GoDaddyAccount account)
         {
             return Modal.GetBackOrders(account);
         }
 
+        public IQueryable<AuctionHistoryView> LoadBackOrderHistory(BackOrders backorder)
+        {
+            return Modal.GetBackOrderHistory(backorder);
+        }
+
         public void SaveBackOrder(GoDaddyAccount account)
         {
-            var backOrder = new BackOrders();
-            backOrder.OrderID = Guid.NewGuid();
-            backOrder.GoDaddyAccount = account.AccountID;
-            backOrder.AlertEmail1 = View.AlertEmail1;
-            backOrder.AlertEmail2 = View.AlertEmail2;
-            backOrder.CreditsToUse = View.CreditstoUse;
-            backOrder.DateToOrder = View.DateToPlaceOrder;
-            backOrder.Private = false;
-            backOrder.DomainName = View.DomainName;
+            var backOrder = new BackOrders
+            {
+                OrderID = Guid.NewGuid(),
+                GoDaddyAccount = account.AccountID,
+                AlertEmail1 = View.AlertEmail1,
+                AlertEmail2 = View.AlertEmail2,
+                CreditsToUse = View.CreditstoUse,
+                DateToOrder = View.DateToPlaceOrder,
+                Private = false,
+                DomainName = View.DomainName
+            };
 
             Modal.SaveBackOrder(backOrder);
         }

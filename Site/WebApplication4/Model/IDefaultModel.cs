@@ -1,4 +1,5 @@
-﻿using ASEntityFramework;
+﻿using System;
+using ASEntityFramework;
 
 namespace WebApplication4.Model
 {
