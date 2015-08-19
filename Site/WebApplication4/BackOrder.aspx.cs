@@ -58,7 +58,7 @@ namespace WebApplication4
 
         private BackOrderPresenter Presenter
         {
-            get { return new BackOrderPresenter(this); }
+            get { return new BackOrderPresenter(this, (Master.Default)Master); }
         }
 
         public DateTime DateToPlaceOrder

@@ -142,5 +142,17 @@ namespace WebApplication4.Master
         {
             get { return new ASEntities(); }
         }
+
+
+        public DateTime GetPacificTime
+        {
+            get
+            {
+                var tzi = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
+                var localDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tzi);
+
+                return localDateTime;
+            }
+        }
     }
 }

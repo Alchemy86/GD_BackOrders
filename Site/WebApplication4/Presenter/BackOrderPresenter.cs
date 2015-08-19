@@ -11,10 +11,10 @@ namespace WebApplication4.Presenter
         protected IBackOrderView View;
         protected BackOrderModal Modal;
 
-        public BackOrderPresenter(IBackOrderView view)
+        public BackOrderPresenter(IBackOrderView view, IDefaultView defaultView)
         {
             View = view;
-            Modal = new BackOrderModal();
+            Modal = new BackOrderModal(defaultView);
         }
 
         public bool CheckDomainValid()

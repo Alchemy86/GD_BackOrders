@@ -141,7 +141,7 @@ namespace AuctionSniperDLL.Business.Sites
                 {
                     if (auction.EndDate != end)
                     {
-                        new Error().Add("Checked at: " + DateTime.Now + "\r\nEnd date found to be different: " + end + "\r\n" + "Old date was: " + auction.EndDate, "Date Change Value");
+                        new Error().Add("Checked at: " + GetPacificTime + "\r\nEnd date found to be different: " + end + "\r\n" + "Old date was: " + auction.EndDate, "Date Change Value");
                         //auction.EndDate = end;
                         //ds.Auctions.AddOrUpdate(auction);
                         //ds.SaveChanges();
@@ -154,6 +154,17 @@ namespace AuctionSniperDLL.Business.Sites
             return minbid;
         }
 
+        public DateTime GetPacificTime
+        {
+            get
+            {
+                var tzi = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
+                var localDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tzi);
+
+                return localDateTime;
+            }
+        }
+
         private HtmlDocument GetAuctionDetails(string auctionNo)
         {
             var data = Post("https://auctions.godaddy.com/trpMessageHandler.aspx", string.Format("ad={0}&type=Search", auctionNo));
@@ -164,7 +175,7 @@ namespace AuctionSniperDLL.Business.Sites
 
         public DateTime GetEndDate(string auctionNo)
         {
-            var endDate = DateTime.Now.AddHours(decimal.ToInt32(Timediff));
+            var endDate = GetPacificTime;
             var details = GetAuctionDetails(auctionNo);
             if (QuerySelector(details.DocumentNode, "span.OneLinkNoTx") != null)
             {
@@ -191,6 +202,25 @@ namespace AuctionSniperDLL.Business.Sites
             var data = "{\"sInput\":\"<PARAMS><PARAM name=\\\"Type\\\" value=\\\"BackorderPublic\\\" /><PARAM name=\\\"DomainNames\\\" value=\\\"" + domainName +"\\\" /></PARAMS>\"}";
             var values = new Dictionary<string, string> {{"Content-Type", "application/json; charset=UTF-8"}};
             var results = Post("https://dcc.godaddy.com/dcc40/MonitorAction_SetupWS.asmx/ValidateDomainNames", data, values);
+
+            return results.Contains("SUCCESS|");
+        }
+            
+        public bool ValidateMonitorEmail(string email, string email2)
+        {   
+            var data = "{\"sInput\":\"<PARAMS><PARAM name=\\\"Email1\\\" value=\\\"" + email + "\\\" /><PARAM name=\\\"Email2\\\" value=\\\"" + email2 + "\\\" /></PARAMS>\"}";
+            var values = new Dictionary<string, string> { { "Content-Type", "application/json; charset=UTF-8" } };
+            var results = Post("https://dcc.godaddy.com/dcc40/MonitorAction_SetupWS.asmx/ValidateMonitorEmail", data, values);
+
+            return results.Contains("SUCCESS|");
+        }
+
+        public bool ValidateBackorderContacts(string email, string email2)
+        {
+            var data = "{\"sInput\":\"<PARAMS><PARAM name=\\\"Email1\\\" value=\\\"" + email + "\\\" /><PARAM name=\\\"Email2\\\" value=\\\"" + email2 + "\\\" /></PARAMS>\"}";
+            var dat1 = "{\"sInput\":\"<PARAMS><PARAM name=\\\"FirstName\\\" value=\\\"Travis\\\" /><PARAM name=\\\"LastName\\\" value=\\\"Schadt\\\" /><PARAM name=\\\"Company\\\" value=\\\"\\\" /><PARAM name=\\\"Address1\\\" value=\\\"2228 Glenwood Road\\\" /><PARAM name=\\\"Address2\\\" value=\\\"\\\" /><PARAM name=\\\"City\\\" value=\\\"Vestal\\\" /><PARAM name=\\\"StateText\\\" value=\\\"New York\\\" /><PARAM name=\\\"Zip\\\" value=\\\"13850\\\" /><PARAM name=\\\"Country\\\" value=\\\"United States\\\" /><PARAM name=\\\"PhoneCallingCode\\\" value=\\\"1\\\" /><PARAM name=\\\"Phone\\\" value=\\\"6073413173\\\" /><PARAM name=\\\"FaxCallingCode\\\" value=\\\"1\\\" /><PARAM name=\\\"Fax\\\" value=\\\"\\\" /><PARAM name=\\\"Email\\\" value=\\\"bidiot99@gmail.com\\\" /></PARAMS>\"}";
+            var values = new Dictionary<string, string> { { "Content-Type", "application/json; charset=UTF-8" } };
+            var results = Post("https://dcc.godaddy.com/dcc40/MonitorAction_SetupWS.asmx/ValidateBackorderContacts", data, values);
 
             return results.Contains("SUCCESS|");
         }
@@ -269,7 +299,7 @@ namespace AuctionSniperDLL.Business.Sites
                                 auction.MinOffer = TryParse_INT(item.Replace(",", ""));
                             }
                         }
-                        auction.EndDate = DateTime.Now.AddHours(Timediff);
+                        auction.EndDate = GetPacificTime;
                         foreach (var item in GetSubStrings(node.InnerHtml, "ShowAuctionDetails('", "',"))
                         {
                             auction.AuctionRef = item;
@@ -306,7 +336,7 @@ namespace AuctionSniperDLL.Business.Sites
                 {
                     HistoryID = Guid.NewGuid(),
                     Text = "Logging In",
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = GetPacificTime,
                     AuctionLink = auction.AuctionID
                 };
 
@@ -326,7 +356,7 @@ namespace AuctionSniperDLL.Business.Sites
                     {
                         HistoryID = Guid.NewGuid(),
                         Text = "Setting Max Bid: " + auction.MyBid,
-                        CreatedDate = DateTime.Now,
+                        CreatedDate = GetPacificTime,
                         AuctionLink = auction.AuctionID
                     };
 
@@ -347,7 +377,7 @@ namespace AuctionSniperDLL.Business.Sites
                         {
                             HistoryID = Guid.NewGuid(),
                             Text = "Bid Process Ended - Your max bid is already too small to place",
-                            CreatedDate = DateTime.Now,
+                            CreatedDate = GetPacificTime,
                             AuctionLink = auction.AuctionID
                         };
 
@@ -392,7 +422,7 @@ namespace AuctionSniperDLL.Business.Sites
                     {
                         HistoryID = Guid.NewGuid(),
                         Text = "Bid Process Completed",
-                        CreatedDate = DateTime.Now,
+                        CreatedDate = GetPacificTime,
                         AuctionLink = auction.AuctionID
                     };
 
@@ -412,7 +442,7 @@ namespace AuctionSniperDLL.Business.Sites
                             {
                                 HistoryID = Guid.NewGuid(),
                                 Text = "Bid Confirmed - You are the high bidder!",
-                                CreatedDate = DateTime.Now,
+                                CreatedDate = GetPacificTime,
                                 AuctionLink = auction.AuctionID
                             };
 
@@ -430,7 +460,7 @@ namespace AuctionSniperDLL.Business.Sites
                             {
                                 HistoryID = Guid.NewGuid(),
                                 Text = "Bid Failed - The site is no longer an auction",
-                                CreatedDate = DateTime.Now,
+                                CreatedDate = GetPacificTime,
                                 AuctionLink = auction.AuctionID
                             };
 
@@ -458,7 +488,7 @@ namespace AuctionSniperDLL.Business.Sites
                         {
                             HistoryID = Guid.NewGuid(),
                             Text = "Bid Not Confirmed - Data logged",
-                            CreatedDate = DateTime.Now,
+                            CreatedDate = GetPacificTime,
                             AuctionLink = auction.AuctionID
                         };
 
@@ -477,7 +507,7 @@ namespace AuctionSniperDLL.Business.Sites
                         {
                             HistoryID = Guid.NewGuid(),
                             Text = "Appologies - 3rd party capture solve failure. This has been reported.",
-                            CreatedDate = DateTime.Now,
+                            CreatedDate = GetPacificTime,
                             AuctionLink = auction.AuctionID
                         };
 
@@ -489,7 +519,7 @@ namespace AuctionSniperDLL.Business.Sites
                         {
                             HistoryID = Guid.NewGuid(),
                             Text = "Appologies - Login to account has failed. 3 Seperate attempts made",
-                            CreatedDate = DateTime.Now,
+                            CreatedDate = GetPacificTime,
                             AuctionLink = auction.AuctionID
                         };
 
@@ -532,7 +562,7 @@ namespace AuctionSniperDLL.Business.Sites
 
         private DateTime GenerateEstimateEnd(HtmlNode node)
         {
-            var estimateEnd = DateTime.Now.AddHours(Timediff);
+            var estimateEnd = GetPacificTime;
             if (node.InnerText != null)
             {
                 var vals = HTMLDecode(node.InnerText).Trim().Split(new [] { ' ' });

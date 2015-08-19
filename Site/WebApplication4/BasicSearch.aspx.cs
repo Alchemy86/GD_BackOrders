@@ -9,6 +9,7 @@ using LunchboxSource.Business.Sites;
 using LunchboxWebControls;
 using WebApplication4.Presenter;
 using WebApplication4.View;
+using AuctionSniperDLL;
 
 namespace WebApplication4
 {
@@ -118,7 +119,7 @@ namespace WebApplication4
                 {
                     HistoryID = Guid.NewGuid(),
                     Text = "Auction Added",
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DefaultView.GetPacificTime,
                     AuctionLink = auction.AuctionID
                 };
                 ds.AuctionHistory.Add(item);

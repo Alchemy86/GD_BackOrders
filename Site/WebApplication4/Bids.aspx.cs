@@ -83,7 +83,7 @@ namespace WebApplication4
 
             var won = history.Any(x => x.Text == "Auction WON");
             var lost = history.Any(x => x.Text == "Auction LOST");
-            var now = DateTime.Now;
+            var now = ((Master.Default)Master).GetPacificTime;
 
             if (won)
             {
@@ -152,7 +152,7 @@ namespace WebApplication4
 
         public void LoadAuctions()
         {
-            var currentDate = DateTime.Now;
+            var currentDate = ((Master.Default)Master).GetPacificTime;
             LunchboxGridView2.DataSource = MyBids.Where(x=>x.EndDate > currentDate);
             LunchboxGridView2.DataBind();
             //Hide edit options

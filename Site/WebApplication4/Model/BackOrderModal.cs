@@ -2,15 +2,18 @@
 using System.Data.Entity.Migrations;
 using System.Linq;
 using ASEntityFramework;
+using WebApplication4.View;
 
 namespace WebApplication4.Model
 {
     public class BackOrderModal
     {
         protected ASEntities Ds { get; private set; }
+        protected IDefaultView DefaultView { get; set; }
 
-        public BackOrderModal()
+        public BackOrderModal(IDefaultView model)
         {
+            DefaultView = model;
             Ds=new ASEntities();
         }
 
@@ -25,7 +28,7 @@ namespace WebApplication4.Model
         {
             var history = new AuctionHistory();
             history.AuctionLink = backorder.OrderID;
-            history.CreatedDate = AuctionSniperDLL.Business.Settings.GetDateTimeOffSet();
+            history.CreatedDate = DefaultView.GetPacificTime;
             history.Text = "Added";
             Ds.AuctionHistory.Add(history);
             Ds.BackOrders.AddOrUpdate(backorder);

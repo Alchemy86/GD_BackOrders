@@ -118,7 +118,7 @@
                                 <span id="timer_<%# Container.DataItemIndex %>"
                                     class="timer" 
                                     data-start='<%#Eval("DateToOrder", "{0:M/dd/yyyy H:mm:ss}")%>'
-                                    data-currentTime='<%# AuctionSniperDLL.Business.Settings.GetDateTimeOffSet().ToString("M/dd/yyyy H:mm:ss") %>'></span>
+                                    data-currentTime='<%# AuctionSniperDLL.Business.Settings.GetPacificTime().ToString("M/dd/yyyy H:mm:ss") %>'></span>
                             </ItemTemplate>
                         </asp:TemplateField>
                     

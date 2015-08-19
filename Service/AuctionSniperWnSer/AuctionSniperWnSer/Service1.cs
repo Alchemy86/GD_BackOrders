@@ -33,13 +33,13 @@ namespace AuctionSniperWnSer
             try
             {
                 Email.SendEmail("codebyexample@gmail.com", "ServiceStarted", "Started the service");
-                Console.WriteLine(@"Service Started");
+                Console.WriteLine(@"Backorder Service Started");
                 CheckDB();
                 Email.SendEmail("codebyexample@gmail.com", "ServiceTested", "Successfull test");
             }
             catch (Exception ex)
             {
-                Email.SendEmail("codebyexample@gmail.com", "ServiceTested", "failed test: " + ex.Message);
+                Email.SendEmail("codebyexample@gmail.com", "Backorder ServiceTested", "failed test: " + ex.Message);
             }
             
             var th1 = new Thread(() =>
@@ -52,17 +52,6 @@ namespace AuctionSniperWnSer
             th1.SetApartmentState(ApartmentState.STA);
             th1.IsBackground = true;
             th1.Start();
-
-            var th2 = new Thread(() =>
-            {
-                AlertTimer = new Timer(10000); // Run every 10 sec
-                AlertTimer.Elapsed += AlertTimer_Elapsed;
-                AlertTimer.Enabled = true;
-                AlertTimer.Start();
-            });
-            th2.SetApartmentState(ApartmentState.STA);
-            th2.IsBackground = true;
-            th2.Start();
         }
 
         void AlertTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -86,7 +75,7 @@ namespace AuctionSniperWnSer
                           ex.StackTrace + Environment.NewLine;
                 message += ex.InnerException.Message;
                 new Error().Add(message);
-                Email.SendEmail("codebyexample@gmail.com", "Service Error - Alerts",
+                Email.SendEmail("codebyexample@gmail.com", "Backorder Service Error - Alerts",
                         ex.Message + Environment.NewLine +
                         ex.StackTrace + Environment.NewLine);
             }
@@ -101,7 +90,7 @@ namespace AuctionSniperWnSer
         {
             try
             {
-                CheckDB();
+                CheckBackOrders();
             }
             catch (Exception ex)
             {
@@ -126,7 +115,7 @@ namespace AuctionSniperWnSer
                 foreach (var alert in alertsToProcess)
                 {
                     var ts =
-                        alert.TriggerTime.Subtract(DateTime.Now);
+                        alert.TriggerTime.Subtract(Settings.GetPacificTime());
                     if (ts.TotalSeconds < Convert.ToInt32(Properties.Settings.Default.BidTime))
                     {
                         try
@@ -156,13 +145,13 @@ namespace AuctionSniperWnSer
                                 gd.Login(account.GoDaddyUsername, account.GoDaddyPassword);
                                 if (gd.WinCheck(account.DomainName))
                                 {
-                                    if (DateTime.Now > alert1.TriggerTime.AddHours(4))
+                                    if (Settings.GetPacificTime() > alert1.TriggerTime.AddHours(4))
                                     {
                                         var item = new AuctionHistory
                                         {
                                             HistoryID = Guid.NewGuid(),
                                             Text = "Auction Check (Delayed)",
-                                            CreatedDate = DateTime.Now,
+                                            CreatedDate = Settings.GetPacificTime(),
                                             AuctionLink = alert1.AuctionID
                                         };
                                         ds.AuctionHistory.Add(item);
@@ -170,7 +159,7 @@ namespace AuctionSniperWnSer
                                         {
                                             HistoryID = Guid.NewGuid(),
                                             Text = "Auction WON",
-                                            CreatedDate = DateTime.Now,
+                                            CreatedDate = Settings.GetPacificTime(),
                                             AuctionLink = alert1.AuctionID
                                         };
                                         ds.AuctionHistory.Add(item);
@@ -182,7 +171,7 @@ namespace AuctionSniperWnSer
                                         {
                                             HistoryID = Guid.NewGuid(),
                                             Text = "Auction WON",
-                                            CreatedDate = DateTime.Now,
+                                            CreatedDate = Settings.GetPacificTime(),
                                             AuctionLink = alert1.AuctionID
                                         };
                                         ds.AuctionHistory.Add(item);
@@ -192,13 +181,13 @@ namespace AuctionSniperWnSer
                                 }
                                 else
                                 {
-                                    if (DateTime.Now > alert1.TriggerTime.AddHours(4))
+                                    if (Settings.GetPacificTime() > alert1.TriggerTime.AddHours(4))
                                     {
                                         var item = new AuctionHistory
                                         {
                                             HistoryID = Guid.NewGuid(),
                                             Text = "Auction Check (Delayed)",
-                                            CreatedDate = DateTime.Now,
+                                            CreatedDate = Settings.GetPacificTime(),
                                             AuctionLink = alert1.AuctionID
                                         };
                                         ds.AuctionHistory.Add(item);
@@ -206,7 +195,7 @@ namespace AuctionSniperWnSer
                                         {
                                             HistoryID = Guid.NewGuid(),
                                             Text = "Auction LOST",
-                                            CreatedDate = DateTime.Now,
+                                            CreatedDate = Settings.GetPacificTime(),
                                             AuctionLink = alert1.AuctionID
                                         };
                                         ds.AuctionHistory.Add(item);
@@ -218,7 +207,7 @@ namespace AuctionSniperWnSer
                                         {
                                             HistoryID = Guid.NewGuid(),
                                             Text = "Auction LOST",
-                                            CreatedDate = DateTime.Now,
+                                            CreatedDate = Settings.GetPacificTime(),
                                             AuctionLink = alert1.AuctionID
                                         };
 
@@ -238,7 +227,7 @@ namespace AuctionSniperWnSer
                                             {
                                                 HistoryID = Guid.NewGuid(),
                                                 Text = "Bid Reminder Email Sent",
-                                                CreatedDate = DateTime.Now,
+                                                CreatedDate = Settings.GetPacificTime(),
                                                 AuctionLink = alert1.AuctionID
                                             };
 
@@ -261,7 +250,7 @@ namespace AuctionSniperWnSer
                                             {
                                                 HistoryID = Guid.NewGuid(),
                                                 Text = "Alerted - Auction will be lost",
-                                                CreatedDate = DateTime.Now,
+                                                CreatedDate = Settings.GetPacificTime(),
                                                 AuctionLink = alert1.AuctionID
                                             };
 
@@ -280,7 +269,7 @@ namespace AuctionSniperWnSer
                                             {
                                                 HistoryID = Guid.NewGuid(),
                                                 Text = "Auction will be lost - Email warning is disabled",
-                                                CreatedDate = DateTime.Now,
+                                                CreatedDate = Settings.GetPacificTime(),
                                                 AuctionLink = alert1.AuctionID
                                             };
 
@@ -308,8 +297,109 @@ namespace AuctionSniperWnSer
 
         protected override void OnStop()
         {
-            Email.SendEmail("codebyexample@gmail.com", "Service Stopped", "Stopped the service");
+            Email.SendEmail("codebyexample@gmail.com", "backorder Service Stopped", "Stopped the service");
             Console.WriteLine(@"Service Stopped");
+        }
+
+        private void CheckBackOrders()
+        {
+            using (var ds = new ASEntities())
+            {
+                CheckTimer.Stop();
+                var tomorrow = Settings.GetPacificTime().AddDays(1);
+                var backordersToProcess = ds.BackOrders.Where(x => x.Processed == false && x.DateToOrder <= tomorrow).ToList();
+                foreach (var order in backordersToProcess)
+                {
+                    var ts =
+                        order.DateToOrder.Subtract(Settings.GetPacificTime());
+                    if (ts.TotalSeconds < Convert.ToInt32(Properties.Settings.Default.BidTime) &&
+                       ts.TotalSeconds > 0)
+                    {
+                        try
+                        {
+                            order.Processed = true;
+                            ds.BackOrders.AddOrUpdate(order);
+                            ds.SaveChanges();
+
+                            var item = new AuctionHistory
+                            {
+                                HistoryID = Guid.NewGuid(),
+                                Text = "Order Process Started",
+                                CreatedDate = Settings.GetPacificTime(),
+                                AuctionLink = order.OrderID
+                            };
+
+                            ds.AuctionHistory.Add(item);
+                            ds.SaveChanges();
+
+                            var account = ds.GoDaddyAccount.First(x => x.AccountID == order.GoDaddyAccount);
+                            var th = new Thread(() =>
+                            {
+                                try
+                                {
+                                    var gd = new GoDaddyAuctions2Cs();
+                                    if (gd.Login(account.GoDaddyUsername, account.GoDaddyPassword))
+                                    {
+                                        AddHistoryItem(order.OrderID, "Logged in: " + account.GoDaddyUsername);
+                                    }
+
+                                    if (gd.CheckBackOrderDomain_IsValid(order.DomainName))
+                                    {
+                                        AddHistoryItem(order.OrderID, "Domain confirmed valid: " + order.DomainName);
+                                        if (gd.ValidateMonitorEmail(order.AlertEmail1, order.AlertEmail2))
+                                        {
+                                            AddHistoryItem(order.OrderID, "Alert Email validated: " + order.AlertEmail1);
+                                            AddHistoryItem(order.OrderID, "Final submission failed, please check the error log ");
+                                        }
+                                        else
+                                        {
+                                            AddHistoryItem(order.OrderID, "Alert Email invalid, order not procesed: " + order.AlertEmail1);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        AddHistoryItem(order.OrderID, "Domain invalid, order not procesed: " + order.DomainName);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    SendErrorReport(e);
+                                }
+
+
+                            });
+                            th.SetApartmentState(ApartmentState.STA);
+                            th.IsBackground = true;
+                            th.Start();
+                        }
+                        catch (Exception ex)
+                        {
+                            SendErrorReport(ex);
+                        }
+
+                    }
+                }
+
+                CheckTimer.Start();
+            }
+        }
+
+        public void AddHistoryItem(Guid ID, String Message)
+        {
+            using (var ds = new ASEntities())
+            {
+                var item = new AuctionHistory
+                {
+                    HistoryID = Guid.NewGuid(),
+                    Text = Message,
+                    CreatedDate = Settings.GetPacificTime(),
+                    AuctionLink = ID
+                };
+
+                ds.AuctionHistory.Add(item);
+                ds.SaveChanges();
+            }
+
         }
 
         //Run the check
@@ -318,12 +408,12 @@ namespace AuctionSniperWnSer
             using (var ds = new ASEntities())
             {
                 CheckTimer.Stop();
-                var tomorrow = DateTime.Now.AddDays(1);
+                var tomorrow = Settings.GetPacificTime().AddDays(1);
                 var auctionsToProcess = ds.Auctions.Where(x => x.Processed == false && x.EndDate <= tomorrow).ToList();
                 foreach (var auction in auctionsToProcess)
                 {
                     var ts =
-                        auction.EndDate.Subtract(DateTime.Now);
+                        auction.EndDate.Subtract(Settings.GetPacificTime());
                     if (ts.TotalSeconds < Convert.ToInt32(Properties.Settings.Default.BidTime) &&
                         (auction.MinBid < auction.MyBid || auction.MinBid == auction.MyBid) && ts.TotalSeconds > 0)
                     {
@@ -337,7 +427,7 @@ namespace AuctionSniperWnSer
                             {
                                 HistoryID = Guid.NewGuid(),
                                 Text = "Bid Process Started",
-                                CreatedDate = DateTime.Now,
+                                CreatedDate = Settings.GetPacificTime(),
                                 AuctionLink = auction.AuctionID
                             };
 
@@ -358,7 +448,6 @@ namespace AuctionSniperWnSer
                                 }
                                 catch (Exception e)
                                 {
-                                    EventLog.
                                     SendErrorReport(e);
                                 }
                                 

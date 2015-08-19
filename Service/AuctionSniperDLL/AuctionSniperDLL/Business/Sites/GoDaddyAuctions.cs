@@ -30,6 +30,16 @@
           
         }
 
+        public DateTime GetPacificTime
+        {
+            get
+            {
+                var tzi = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
+                var localDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tzi);
+
+                return localDateTime;
+            }
+        }
 
         public SortableBindingList<Auctions> GetBidsandOffers()
         {
@@ -104,7 +114,7 @@
             {
                 
                 if (!auctions.Select(s => s.AuctionRef).Distinct().Contains(auction.AuctionRef) &&
-                    auction.EndDate > DateTime.Now.AddHours(decimal.ToInt32(Timediff)))
+                    auction.EndDate > GetPacificTime)
                 {
                     var searchList = Search(auction.DomainName).ToList();
                     if (searchList != null && searchList.Count > 0)
@@ -246,7 +256,7 @@
                                 auction.MinOffer = TryParse_INT(item.Replace(",", ""));
                             }
                         }
-                        auction.EndDate = DateTime.Now;
+                        auction.EndDate = GetPacificTime;
                         foreach (var item in this.GetSubStrings(node.InnerHtml, "ShowAuctionDetails('", "',"))
                         {
                             auction.AuctionRef = item;
@@ -274,7 +284,7 @@
 
         private DateTime GenerateEstimateEnd(HtmlNode node)
         {
-            var estimateEnd = DateTime.Now.AddHours(decimal.ToInt32(Timediff));
+            var estimateEnd = GetPacificTime;
             if (node.InnerText != null)
             {
                 var vals = HTTPDecode(node.InnerText).Trim().Split(new char[] { ' ' });
@@ -302,7 +312,7 @@
 
         public DateTime GetEndDate(string auctionNo)
         {
-            var endDate = DateTime.Now.AddHours(decimal.ToInt32(Timediff));
+            var endDate = GetPacificTime;
             var details = this.GetAuctionDetails(auctionNo);
             if (QuerySelector(details.DocumentNode, "span.OneLinkNoTx") != null)
             {
@@ -367,7 +377,7 @@
                 {
                     HistoryID = Guid.NewGuid(),
                     Text = "Logging In",
-                    CreatedDate = DateTime.Now.AddSeconds(15),
+                    CreatedDate = GetPacificTime.AddSeconds(15),
                     AuctionLink = auction.AuctionID
                 };
 
@@ -403,7 +413,7 @@
                 {
                     HistoryID = Guid.NewGuid(),
                     Text = "Setting Max Bid: " + auction.MyBid,
-                    CreatedDate = DateTime.Now.AddSeconds(15),
+                    CreatedDate = GetPacificTime.AddSeconds(15),
                     AuctionLink = auction.AuctionID
                 };
 
@@ -604,7 +614,7 @@
                 {
                     HistoryID = Guid.NewGuid(),
                     Text = "Bid Process Completed",
-                    CreatedDate = DateTime.Now.AddSeconds(15),
+                    CreatedDate = GetPacificTime.AddSeconds(15),
                     AuctionLink = auction.AuctionID
                 };
 
